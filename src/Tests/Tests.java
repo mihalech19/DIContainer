@@ -27,22 +27,22 @@ class Tests {
 
 	@Test
 	void test() {
-		// Получение двух провайдеров, ожидается что getInstance() каждого из них вернет разные экземпляры
+		// РџРѕР»СѓС‡РµРЅРёРµ РґРІСѓС… РїСЂРѕРІР°Р№РґРµСЂРѕРІ, РѕР¶РёРґР°РµС‚СЃСЏ С‡С‚Рѕ getInstance() РєР°Р¶РґРѕРіРѕ РёР· РЅРёС… РІРµСЂРЅРµС‚ СЂР°Р·РЅС‹Рµ СЌРєР·РµРјРїР»СЏСЂС‹
 		Provider<EventDAO> daoProvider = injector.getProvider(EventDAO.class);
 		Provider<EventDAO> daoProvider2 = injector.getProvider(EventDAO.class);
 		EventDAO one = daoProvider.getInstance();
 		EventDAO two = daoProvider2.getInstance();
 		
-		// Проверяем не вернулся ли null для забинженого интерфейса
+		// РџСЂРѕРІРµСЂСЏРµРј РЅРµ РІРµСЂРЅСѓР»СЃСЏ Р»Рё null РґР»СЏ Р·Р°Р±РёРЅР¶РµРЅРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР°
 		assertNotNull(daoProvider);
-		// Проверяем чтобы getInstance() тоже не возвращал null
+		// РџСЂРѕРІРµСЂСЏРµРј С‡С‚РѕР±С‹ getInstance() С‚РѕР¶Рµ РЅРµ РІРѕР·РІСЂР°С‰Р°Р» null
 		assertNotNull(daoProvider.getInstance());
-		// Проверяем чтобы возвращенный из контейнера обьект был забинженого класса
+		// РџСЂРѕРІРµСЂСЏРµРј С‡С‚РѕР±С‹ РІРѕР·РІСЂР°С‰РµРЅРЅС‹Р№ РёР· РєРѕРЅС‚РµР№РЅРµСЂР° РѕР±СЊРµРєС‚ Р±С‹Р» Р·Р°Р±РёРЅР¶РµРЅРѕРіРѕ РєР»Р°СЃСЃР°
 		assertSame(InMemoryEventDAOImpl.class, daoProvider.getInstance().getClass());
-		// На незабинженный интерфейс провайдер должно вернуться как null
+		// РќР° РЅРµР·Р°Р±РёРЅР¶РµРЅРЅС‹Р№ РёРЅС‚РµСЂС„РµР№СЃ РїСЂРѕРІР°Р№РґРµСЂ РґРѕР»Р¶РЅРѕ РІРµСЂРЅСѓС‚СЊСЃСЏ РєР°Рє null
 		assertNull(injector.getProvider(TestInterface2.class));
 		
-		// Проверка чтобы первый обьект не указывал туда же куда и второй
+		// РџСЂРѕРІРµСЂРєР° С‡С‚РѕР±С‹ РїРµСЂРІС‹Р№ РѕР±СЊРµРєС‚ РЅРµ СѓРєР°Р·С‹РІР°Р» С‚СѓРґР° Р¶Рµ РєСѓРґР° Рё РІС‚РѕСЂРѕР№
 		if(one == two)
 			fail("Links point to a single instance of a class not registered as a singleton");
 
@@ -51,7 +51,7 @@ class Tests {
 	@Test
 	void testIOC() throws Exception, ConstructorNotFoundException {
 		
-		// Тест работы иньекции параметров в конструктор при запросе обьекта
+		// РўРµСЃС‚ СЂР°Р±РѕС‚С‹ РёРЅСЊРµРєС†РёРё РїР°СЂР°РјРµС‚СЂРѕРІ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїСЂРё Р·Р°РїСЂРѕСЃРµ РѕР±СЊРµРєС‚Р°
 		EventService eventService = injector.get(EventService.class);
 
 		assertNotNull(eventService);
@@ -62,7 +62,7 @@ class Tests {
 	void testExceptions() {
 		Injector injector2 = new InjectorImpl();
 	
-		// Проверка исключений 
+		// РџСЂРѕРІРµСЂРєР° РёСЃРєР»СЋС‡РµРЅРёР№ 
 		
 		assertThrows(BindingNotFoundException.class, () -> {
 			injector2.get(EventService.class);
@@ -80,12 +80,12 @@ class Tests {
 	
 	@Test
 	void testSingleton() {
-		// Проверка регистрации синглтона
+		// РџСЂРѕРІРµСЂРєР° СЂРµРіРёСЃС‚СЂР°С†РёРё СЃРёРЅРіР»С‚РѕРЅР°
 		Provider<TestInterface> daoProvider = injector.getProvider(TestInterface.class);
 		Provider<TestInterface> daoProvider2 = injector.getProvider(TestInterface.class);
 		Object one = daoProvider.getInstance();
 		Object two = daoProvider2.getInstance();
-		// Ожидается что первый обьект указывает туда же куда и второй
+		// РћР¶РёРґР°РµС‚СЃСЏ С‡С‚Рѕ РїРµСЂРІС‹Р№ РѕР±СЊРµРєС‚ СѓРєР°Р·С‹РІР°РµС‚ С‚СѓРґР° Р¶Рµ РєСѓРґР° Рё РІС‚РѕСЂРѕР№
 		if(one != two)
 			fail("A Singltone object is not");
 	

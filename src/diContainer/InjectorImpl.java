@@ -16,23 +16,23 @@ public class InjectorImpl implements Injector {
 	public synchronized <T> Provider<T> getProvider(Class<T> type) {
 		try {
 			if (!Modifier.isAbstract(type.getModifiers()) && !Modifier.isInterface(type.getModifiers()))
-				return new ProviderImpl<T>((T) get(type)); // Возврат экземпляра самого себя, если запрошенный класс не является интерфейсом / абстрактным
+				return new ProviderImpl<T>((T) get(type)); // Р’РѕР·РІСЂР°С‚ СЌРєР·РµРјРїР»СЏСЂР° СЃР°РјРѕРіРѕ СЃРµР±СЏ, РµСЃР»Рё Р·Р°РїСЂРѕС€РµРЅРЅС‹Р№ РєР»Р°СЃСЃ РЅРµ СЏРІР»СЏРµС‚СЃСЏ РёРЅС‚РµСЂС„РµР№СЃРѕРј / Р°Р±СЃС‚СЂР°РєС‚РЅС‹Рј
 
-			else if (this.bindings.containsKey(type)) { // Проверка наличия bind
-				if (singletons.containsKey(type))        // Зарегистрирован как синглтон?
+			else if (this.bindings.containsKey(type)) { // РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ bind
+				if (singletons.containsKey(type))        // Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ РєР°Рє СЃРёРЅРіР»С‚РѕРЅ?
 				{
 					Object singleton = singletons.get(type);
 					if (singleton != null)
-						return new ProviderImpl <T> ((T) singleton); // Возврат нового экземпляра, если ранее не инициализировалось
+						return new ProviderImpl <T> ((T) singleton); // Р’РѕР·РІСЂР°С‚ РЅРѕРІРѕРіРѕ СЌРєР·РµРјРїР»СЏСЂР°, РµСЃР»Рё СЂР°РЅРµРµ РЅРµ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°Р»РѕСЃСЊ
 					else
 					{
-						singleton = get(this.bindings.get(type));     // Инициализация и сохранение ссылки на синглотон
+						singleton = get(this.bindings.get(type));     // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Рё СЃРѕС…СЂР°РЅРµРЅРёРµ СЃСЃС‹Р»РєРё РЅР° СЃРёРЅРіР»РѕС‚РѕРЅ
 						singletons.put(type, singleton);
 						return new ProviderImpl <T> ((T) singleton);  
 					}
 				} else
 
-					return new ProviderImpl<T>((T) get(this.bindings.get(type)));  // получение и возврат экземпляра класса
+					return new ProviderImpl<T>((T) get(this.bindings.get(type)));  // РїРѕР»СѓС‡РµРЅРёРµ Рё РІРѕР·РІСЂР°С‚ СЌРєР·РµРјРїР»СЏСЂР° РєР»Р°СЃСЃР°
 
 			}
 
@@ -56,21 +56,21 @@ public class InjectorImpl implements Injector {
 			Constructor[] constructors = cl.getConstructors();
 			Constructor constrWithAnnotation = null;
 			Constructor constrDefault = null;
-			for (Constructor constructor : constructors) {   // Скан конструкторов
-				if (constructor.isAnnotationPresent(Inject.class)) // Поиск аннотации @Inject
+			for (Constructor constructor : constructors) {   // РЎРєР°РЅ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ
+				if (constructor.isAnnotationPresent(Inject.class)) // РџРѕРёСЃРє Р°РЅРЅРѕС‚Р°С†РёРё @Inject
 					if (constrWithAnnotation == null)
 						constrWithAnnotation = constructor;
 					else
 						throw new diContainer.TooManyConstructorsException(
 								"Too many constructors with @Inject annotation");
 
-				if (constructor.getParameterCount() == 0)  // Параллельно сохраним конструктор по умолчанию, если есть
+				if (constructor.getParameterCount() == 0)  // РџР°СЂР°Р»Р»РµР»СЊРЅРѕ СЃРѕС…СЂР°РЅРёРј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ, РµСЃР»Рё РµСЃС‚СЊ
 					constrDefault = constructor;
 
 			}
 
 			if (constrWithAnnotation != null) {
-				Object[] injParams = getInjectingParams(cl, constrWithAnnotation);  // Получение параметров для иньекции
+				Object[] injParams = getInjectingParams(cl, constrWithAnnotation);  // РџРѕР»СѓС‡РµРЅРёРµ РїР°СЂР°РјРµС‚СЂРѕРІ РґР»СЏ РёРЅСЊРµРєС†РёРё
 				if (injParams != null)
 					return (T) constrWithAnnotation.newInstance(injParams);
 				else
@@ -78,7 +78,7 @@ public class InjectorImpl implements Injector {
 			}
 
 			else if (constrDefault != null) 
-				return (T) constrDefault.newInstance(); // Создание экземпляра с помощью конструктора по умолчанию
+				return (T) constrDefault.newInstance(); // РЎРѕР·РґР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° СЃ РїРѕРјРѕС‰СЊСЋ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 			else
 				throw new diContainer.ConstructorNotFoundException("No possible constructors found");
 
@@ -92,16 +92,16 @@ public class InjectorImpl implements Injector {
 
 	public Object[] getInjectingParams(Class cl, Constructor constr) throws BindingNotFoundException {
 		Parameter[] params = constr.getParameters();
-		Object[] injectParams = new Object[params.length]; // массив требуемых параметров для конструктора
+		Object[] injectParams = new Object[params.length]; // РјР°СЃСЃРёРІ С‚СЂРµР±СѓРµРјС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ РґР»СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°
 		Provider prov = null;
-		for (int i = 0; i < params.length; i++) { // Проход по всем параметрам конструктора и запрос их провайдеров
+		for (int i = 0; i < params.length; i++) { // РџСЂРѕС…РѕРґ РїРѕ РІСЃРµРј РїР°СЂР°РјРµС‚СЂР°Рј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° Рё Р·Р°РїСЂРѕСЃ РёС… РїСЂРѕРІР°Р№РґРµСЂРѕРІ
 
 			prov = getProvider(params[i].getType());
 
 			if (prov == null)
 				return null;
 
-			injectParams[i] = prov.getInstance();  // сохранение нужного объекта
+			injectParams[i] = prov.getInstance();  // СЃРѕС…СЂР°РЅРµРЅРёРµ РЅСѓР¶РЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 
 		}
 

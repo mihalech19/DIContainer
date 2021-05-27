@@ -1,9 +1,9 @@
 package diContainer;
 
 public interface Injector {
-    <T> Provider<T> getProvider(Class<T> type); //получение экземпляпа провайдера по запрошенному классу
-    <T> void bind(Class<T> intf, Class<? extends T> impl); //регистрация байндинга по классу интерфейса и его реализации
-    <T> void bindSingleton(Class<T> intf, Class<? extends T> impl); //регистрация синглтон класса 
-    <T> T get(Class<T> type) throws TooManyConstructorsException, ConstructorNotFoundException, BindingNotFoundException; // Получение экземпляра обьекта класса со всеми инъекциями
+    <T> Provider<T> getProvider(Class<T> type); //РїРѕР»СѓС‡РµРЅРёРµ СЌРєР·РµРјРїР»СЏРїР° РїСЂРѕРІР°Р№РґРµСЂР° РїРѕ Р·Р°РїСЂРѕС€РµРЅРЅРѕРјСѓ РєР»Р°СЃСЃСѓ
+    <T> void bind(Class<T> intf, Class<? extends T> impl); //СЂРµРіРёСЃС‚СЂР°С†РёСЏ Р±Р°Р№РЅРґРёРЅРіР° РїРѕ РєР»Р°СЃСЃСѓ РёРЅС‚РµСЂС„РµР№СЃР° Рё РµРіРѕ СЂРµР°Р»РёР·Р°С†РёРё
+    <T> void bindSingleton(Class<T> intf, Class<? extends T> impl); //СЂРµРіРёСЃС‚СЂР°С†РёСЏ СЃРёРЅРіР»С‚РѕРЅ РєР»Р°СЃСЃР° 
+    <T> T get(Class<T> type) throws TooManyConstructorsException, ConstructorNotFoundException, BindingNotFoundException; // РџРѕР»СѓС‡РµРЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° РѕР±СЊРµРєС‚Р° РєР»Р°СЃСЃР° СЃРѕ РІСЃРµРјРё РёРЅСЉРµРєС†РёСЏРјРё
 
 }
