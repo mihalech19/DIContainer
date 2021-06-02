@@ -1,17 +1,10 @@
 package Tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import diContainer.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import diContainer.BindingNotFoundException;
-import diContainer.ConstructorNotFoundException;
-import diContainer.Injector;
-import diContainer.InjectorImpl;
-import diContainer.Provider;
-import diContainer.TooManyConstructorsException;
+import static org.junit.jupiter.api.Assertions.*;
 
 class Tests {
 
@@ -49,7 +42,7 @@ class Tests {
 	}
 
 	@Test
-	void testIOC() throws Exception, ConstructorNotFoundException {
+	void testIOC() throws Exception {
 		
 		// Тест работы иньекции параметров в конструктор при запросе обьекта
 		EventService eventService = injector.get(EventService.class);

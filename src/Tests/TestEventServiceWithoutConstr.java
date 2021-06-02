@@ -1,7 +1,5 @@
 package Tests;
 
-import diContainer.Inject;
-
 public class TestEventServiceWithoutConstr {
 
     private EventDAO eventDao;	
