@@ -1,4 +1,4 @@
-package diContainer.Annotations;
+package dicontainer.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

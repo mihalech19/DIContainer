@@ -1,7 +1,7 @@
-package diContainer.Injector;
+package dicontainer.injector;
 
-import diContainer.DIExceptions.DIException;
-import diContainer.Provider.Provider;
+import dicontainer.diexceptions.DIException;
+import dicontainer.provider.Provider;
 
 public interface Injector {
     <T> Provider<T> getProvider(Class<T> type) throws DIException; //получение экземпляпа провайдера по запрошенному классу

@@ -1,12 +1,12 @@
-package diContainer.Injector;
+package dicontainer.injector;
 
-import diContainer.Annotations.Inject;
-import diContainer.DIExceptions.BindingNotFoundException;
-import diContainer.DIExceptions.ConstructorNotFoundException;
-import diContainer.DIExceptions.DIException;
-import diContainer.DIExceptions.TooManyConstructorsException;
-import diContainer.Provider.Provider;
-import diContainer.Provider.ProviderImpl;
+import dicontainer.annotations.Inject;
+import dicontainer.diexceptions.BindingNotFoundException;
+import dicontainer.diexceptions.ConstructorNotFoundException;
+import dicontainer.diexceptions.DIException;
+import dicontainer.diexceptions.TooManyConstructorsException;
+import dicontainer.provider.Provider;
+import dicontainer.provider.ProviderImpl;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;

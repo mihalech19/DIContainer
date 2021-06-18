@@ -1,4 +1,4 @@
-package diContainer.DIExceptions;
+package dicontainer.diexceptions;
 
 public class TooManyConstructorsException extends DIException{
 

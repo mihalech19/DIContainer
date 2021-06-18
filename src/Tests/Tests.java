@@ -1,12 +1,12 @@
 package Tests;
 
-import diContainer.DIExceptions.BindingNotFoundException;
-import diContainer.DIExceptions.ConstructorNotFoundException;
-import diContainer.DIExceptions.DIException;
-import diContainer.DIExceptions.TooManyConstructorsException;
-import diContainer.Injector.Injector;
-import diContainer.Injector.InjectorImpl;
-import diContainer.Provider.Provider;
+import dicontainer.diexceptions.BindingNotFoundException;
+import dicontainer.diexceptions.ConstructorNotFoundException;
+import dicontainer.diexceptions.DIException;
+import dicontainer.diexceptions.TooManyConstructorsException;
+import dicontainer.injector.Injector;
+import dicontainer.injector.InjectorImpl;
+import dicontainer.provider.Provider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

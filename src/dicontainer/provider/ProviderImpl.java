@@ -1,4 +1,4 @@
-package diContainer.Provider;
+package dicontainer.provider;
 
 public class ProviderImpl<T> implements Provider<T> {
 

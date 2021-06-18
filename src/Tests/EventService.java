@@ -1,6 +1,6 @@
 package Tests;
 
-import diContainer.Annotations.Inject;
+import dicontainer.annotations.Inject;
 
 public class EventService {
 
