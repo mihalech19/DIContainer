@@ -1,8 +1,8 @@
-package diContainer;
+package diContainer.Provider;
 
 public class ProviderImpl<T> implements Provider<T> {
 
-	T inst;
+	private final T inst;
 	
 	public ProviderImpl(T instance)
 	{

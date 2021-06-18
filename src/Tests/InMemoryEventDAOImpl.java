@@ -1,6 +1,6 @@
 package Tests;
 
-import diContainer.Inject;
+import diContainer.Annotations.Inject;
 
 public class InMemoryEventDAOImpl implements EventDAO {
 

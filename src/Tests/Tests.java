@@ -1,8 +1,16 @@
 package Tests;
 
-import diContainer.*;
+import diContainer.DIExceptions.BindingNotFoundException;
+import diContainer.DIExceptions.ConstructorNotFoundException;
+import diContainer.DIExceptions.DIException;
+import diContainer.DIExceptions.TooManyConstructorsException;
+import diContainer.Injector.Injector;
+import diContainer.Injector.InjectorImpl;
+import diContainer.Provider.Provider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,15 +19,15 @@ class Tests {
 	Injector injector;
 
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() {
 
-		injector = new InjectorImpl();
+		injector = new InjectorImpl(new HashMap<>(), new HashMap<>());
 		injector.bind(EventDAO.class, InMemoryEventDAOImpl.class);
-		injector.bindSingleton(TestInterface.class, TestInterfaceImpl.class);
+	    injector.bindSingleton(TestInterface.class, TestInterfaceImpl.class);
 	}
 
 	@Test
-	void test() {
+	void test() throws DIException{
 		// Получение двух провайдеров, ожидается что getInstance() каждого из них вернет разные экземпляры
 		Provider<EventDAO> daoProvider = injector.getProvider(EventDAO.class);
 		Provider<EventDAO> daoProvider2 = injector.getProvider(EventDAO.class);
@@ -53,26 +61,20 @@ class Tests {
 
 	@Test
 	void testExceptions() {
-		Injector injector2 = new InjectorImpl();
+		Injector injector2 = new InjectorImpl(new HashMap<>(), new HashMap<>());
 	
 		// Проверка исключений 
 		
-		assertThrows(BindingNotFoundException.class, () -> {
-			injector2.get(EventService.class);
-		});
+		assertThrows(BindingNotFoundException.class, () -> injector2.get(EventService.class));
 		
-		assertThrows(ConstructorNotFoundException.class, () -> {
-			injector2.get(TestEventServiceWithoutConstr.class);
-		});
+		assertThrows(ConstructorNotFoundException.class, () -> injector2.get(TestEventServiceWithoutConstr.class));
 		
-		assertThrows(ConstructorNotFoundException.class, () -> {
-			injector2.get(TooManyConstructorsException.class);
-		});
+		assertThrows(ConstructorNotFoundException.class, () -> injector2.get(TooManyConstructorsException.class));
 
 	}
 	
 	@Test
-	void testSingleton() {
+	void testSingleton() throws DIException {
 		// Проверка регистрации синглтона
 		Provider<TestInterface> daoProvider = injector.getProvider(TestInterface.class);
 		Provider<TestInterface> daoProvider2 = injector.getProvider(TestInterface.class);
