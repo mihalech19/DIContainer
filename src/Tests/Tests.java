@@ -4,6 +4,7 @@ import dicontainer.diexceptions.BindingNotFoundException;
 import dicontainer.diexceptions.ConstructorNotFoundException;
 import dicontainer.diexceptions.DIException;
 import dicontainer.diexceptions.TooManyConstructorsException;
+import dicontainer.injector.DIFactory;
 import dicontainer.injector.Injector;
 import dicontainer.injector.InjectorImpl;
 import dicontainer.provider.Provider;
@@ -21,7 +22,7 @@ class Tests {
 	@BeforeEach
 	void setUp() {
 
-		injector = new InjectorImpl(new HashMap<>(), new HashMap<>());
+		injector = DIFactory.getDefaultContainer();
 		injector.bind(EventDAO.class, InMemoryEventDAOImpl.class);
 	    injector.bindSingleton(TestInterface.class, TestInterfaceImpl.class);
 	}
